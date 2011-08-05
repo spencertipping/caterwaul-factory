@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js'></script>
+  <script src='http://caterwauljs.org/build/caterwaul.js'></script>
+  <script src='http://caterwauljs.org/build/extensions/std.pre.js'></script>
+  <script src='http://caterwauljs.org/build/extensions/ui.pre.js'></script>
+  <script src='factory.js'></script>
+
+  <script>
+    $(caterwaul.js_ui(caterwaul.js_all())(function () {
+      $('body').append(jquery in div(textarea.input, button.generate('Generate'), textarea.output *readonly('true'))),
+
+      $('.input').keyup(given.e in $(this).css('color', is_valid($(this).val()) ? 'black' : 'red') -then-
+                                   $('.output').val(compile($(this).val()).toString())),
+
+      $('.generate').click(generate),
+
+      where [compile(s)  = caterwaul.factory(caterwaul(s, caterwaul.factory)) -rescue- e,
+             is_valid(s) = compile(s).constructor === Function,
+
+             generate()  = $('.output').val(compile($('.input').val()) -re [it.constructor === Function ? JSON.stringify(it(caterwaul.bbs_random())) :
+                                                                                                          it])];
+    }));
+  </script>
+
+  <style>
+    body {font-family: sans-serif; font-size: 9pt}
+    textarea {min-width: 500px; min-height: 300px; border: none; background: #eee; padding: 4px; font-size: 11pt; display: block}
+  </style>
+  </head>
+
+  <body></body>
+</html>

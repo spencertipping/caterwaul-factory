@@ -1,0 +1,48 @@
+Caterwaul Factory | Spencer Tipping
+Licensed under the terms of the MIT source code license
+
+Introduction.
+Factory gives you a quick way to generate values in Javascript. It provides a bunch of composable operators that form a type-checked (!) DSL that maps random seeds to outputs. Because
+Javascript's random number generator doesn't support seeding, I've implemented the BBS algorithm (http://en.wikipedia.org/wiki/Blum_Blum_Shub) to produce 26 bits of entropy at a time. I chose
+the primes to use to form the modulus, and did so somewhat arbitrarily. (26 bits of entropy because all numbers in Javascript are doubles, and the mantissa has 53 bits of entropy, which is
+just enough to accommodate the squaring step without losing information.)
+
+Usage.
+You can use Factory to create a DSL by importing caterwaul.factory as the scope of a function or a string. For example:
+
+| var f = caterwaul('one_of(1, 2, 3)', caterwaul.factory);
+  f(caterwaul.bbs_random())     // -> 1, 2, or 3
+
+caterwaul.js_all()(function (undefined) {
+  caterwaul.bbs_random(seed) = given.x [(x = (x || (x = seed || +new Date() % m)) * x % m) / m] -where [p = 7243, q = 8747, m = p * q] -effect [it.soft_type = 'rng'],
+
+  caterwaul.factory = promote_constants_in -se [it.one_of    = one_of,     it.integer_between = integer_between,
+                                                it.literally = literally,  it.real_between    = real_between]
+
+Type checking.
+Functions here are type-checked in the sense that they object to being called on arguments of the wrong type. In particular, this helps to prevent the combinators from being misused (which is
+easy enough to do because the functions are highly curried). This is done by annotating functions with flags indicating what a generator produces. Functions implement typechecking by asserting
+things about their arguments using the 'should' construct.
+
+  -where [should_be_rng(x)                   = '#{x} should be a random number generator'        -raise -unless [ x && x.soft_type === 'rng']                                     -re.x,
+          should_be_generator_or_constant(x) = '#{x} should be either a constant or a generator' -raise -unless [!x || x.constructor !== Function || x.soft_type === 'generator'] -re.x,
+          should_be_generator(x)             = '#{x} should be a generator'                      -raise -unless [ x && x.constructor === Function && x.soft_type === 'generator'] -re.x,
+
+          generator(f, description)          = given.r [should_be_rng(r), f.apply(this, arguments)] -se [it.soft_type = 'generator', it.toString() = description],
+
+          array_generator_for(xs)            = generator(given.r in xs       *[       x   (r)]          -seq, '[#{xs.join(", ")}]'),
+          object_generator_for(h)            = generator(given.r in h /pairs *[[x[0], x[1](r)]] -object -seq, '{#{h /pairs *[x[0] + ": " + x[1]] -seq -re- it.join(", ")}}'),
+          literally(x)                       = generator(given.r in x,                                        JSON.stringify(x)),
+
+          promote_constants_in(x)            = x ? x.constructor === Array    ? array_generator_for (x        *[       promote_constants_in(x)]             -seq) :
+                                                   x.constructor === Object   ? object_generator_for(x /pairs *[[x[0], promote_constants_in(x[1])]] -object -seq -se- console.log(it)) :
+                                                   x.constructor === Function ? should_be_generator(x) :
+                                                                                literally(x) :
+                                                   literally(x),
+
+          one_of(args = arguments)           = generator(given.r in xs[r() /se[console.log(it)] * xs.length >>> 0](r), 'one_of(#{xs.join(", ")})')
+                                               -effect- xs *![should_be_generator_or_constant(x)] /seq
+                                               -where  [xs = args *[promote_constants_in(x)] -seq],
+
+          integer_between(x, y)              = generator(given.r in r() * (y - x) + x >>> 0, 'integer between #{x} and #{y}'),
+          real_between(x, y)                 = generator(given.r in r() * (y - x) + x,       'real between #{x} and #{y}')]})();

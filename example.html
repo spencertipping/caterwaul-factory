@@ -3,15 +3,15 @@
   <head>
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js'></script>
   <script src='http://caterwauljs.org/build/caterwaul.js'></script>
-  <script src='http://caterwauljs.org/build/extensions/std.pre.js'></script>
-  <script src='http://caterwauljs.org/build/extensions/ui.pre.js'></script>
+  <script src='http://caterwauljs.org/build/caterwaul.std.js'></script>
+  <script src='http://caterwauljs.org/build/caterwaul.ui.js'></script>
   <script src='factory.js'></script>
 
   <script>
-    $(caterwaul.js_ui(caterwaul.js_all())(function () {
+    $(caterwaul.jquery(caterwaul.js_all())(function () {
       $('body').append(jquery in div(textarea.input, button.generate('Generate'), textarea.output *readonly('true'))),
 
-      $('.input').keyup(given.e in $(this).css('color', is_valid($(this).val()) ? 'black' : 'red') -then-
+      $('.input').keyup(given.e in $(this).css('color', is_valid($(this).val()) ? 'black' : 'red') -re-
                                    $('.output').val(compile($(this).val()).toString())),
 
       $('.generate').click(generate),

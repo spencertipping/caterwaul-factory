@@ -14,7 +14,7 @@
 //   f(caterwaul.bbs_random())     // -> 1, 2, or 3
 
 caterwaul.js_all()(function (undefined) {
-  caterwaul.bbs_random(seed) = given.x [(x = (x || (x = seed || +new Date() % m)) * x % m) / m] -where [p = 7243, q = 8747, m = p * q] -effect [it.soft_type = 'rng'],
+  caterwaul.bbs_random(seed) = given.x [(x = (x || (x = seed || +new Date() % m)) * x % m) / m] -where [p = 7243, q = 8747, m = p * q] -se [it.soft_type = 'rng'],
 
   caterwaul.factory = promote_constants_in -se [it.one_of    = one_of,     it.integer_between = integer_between,
                                                 it.literally = literally,  it.real_between    = real_between]
@@ -41,7 +41,7 @@ caterwaul.js_all()(function (undefined) {
                                                    literally(x),
 
           one_of(args = arguments)           = generator(given.r in xs[r() /se[console.log(it)] * xs.length >>> 0](r), 'one_of(#{xs.join(", ")})')
-                                               -effect- xs *![should_be_generator_or_constant(x)] /seq
+                                               -se- xs *![should_be_generator_or_constant(x)] /seq
                                                -where  [xs = args *[promote_constants_in(x)] -seq],
 
           integer_between(x, y)              = generator(given.r in r() * (y - x) + x >>> 0, 'integer between #{x} and #{y}'),

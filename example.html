@@ -16,7 +16,7 @@
 
       $('.generate').click(generate),
 
-      where [compile(s)  = caterwaul.factory(caterwaul(s, caterwaul.factory)) -rescue- e,
+      where [compile(s)  = caterwaul.factory(caterwaul()(s, caterwaul.factory)) -rescue- e,
              is_valid(s) = compile(s).constructor === Function,
 
              generate()  = $('.output').val(compile($('.input').val()) -re [it.constructor === Function ? JSON.stringify(it(caterwaul.bbs_random())) :

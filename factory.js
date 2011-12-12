@@ -42,7 +42,7 @@ caterwaul('js_all')(function (undefined) {
 
           one_of(args = arguments)           = generator(given.r in xs[r() /se[console.log(it)] * xs.length >>> 0](r), 'one_of(#{xs.join(", ")})')
                                                -se- xs *![should_be_generator_or_constant(x)] /seq
-                                               -where  [xs = args *[promote_constants_in(x)] -seq],
+                                               -where  [xs = +args *[promote_constants_in(x)] -seq],
 
           integer_between(x, y)              = generator(given.r in r() * (y - x) + x >>> 0, 'integer between #{x} and #{y}'),
           real_between(x, y)                 = generator(given.r in r() * (y - x) + x,       'real between #{x} and #{y}')]})();

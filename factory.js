@@ -13,7 +13,7 @@
 // | var f = caterwaul('one_of(1, 2, 3)', caterwaul.factory);
 //   f(caterwaul.bbs_random())     // -> 1, 2, or 3
 
-caterwaul.js_all()(function (undefined) {
+caterwaul('js_all')(function (undefined) {
   caterwaul.bbs_random(seed) = given.x [(x = (x || (x = seed || +new Date() % m)) * x % m) / m] -where [p = 7243, q = 8747, m = p * q] -se [it.soft_type = 'rng'],
 
   caterwaul.factory = promote_constants_in -se [it.one_of    = one_of,     it.integer_between = integer_between,
@@ -35,7 +35,7 @@ caterwaul.js_all()(function (undefined) {
           literally(x)                       = generator(given.r in x,                                        JSON.stringify(x)),
 
           promote_constants_in(x)            = x ? x.constructor === Array    ? array_generator_for (x        *[       promote_constants_in(x)]             -seq) :
-                                                   x.constructor === Object   ? object_generator_for(x /pairs *[[x[0], promote_constants_in(x[1])]] -object -seq -se- console.log(it)) :
+                                                   x.constructor === Object   ? object_generator_for(x /pairs *[[x[0], promote_constants_in(x[1])]] -object -seq) :
                                                    x.constructor === Function ? should_be_generator(x) :
                                                                                 literally(x) :
                                                    literally(x),

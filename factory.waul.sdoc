@@ -13,11 +13,11 @@ You can use Factory to create a DSL by importing caterwaul.factory as the scope 
 | var f = caterwaul('one_of(1, 2, 3)', caterwaul.factory);
   f(caterwaul.bbs_random())     // -> 1, 2, or 3
 
-caterwaul('js_all')(function (undefined) {
-  caterwaul.bbs_random(seed) = given.x [(x = (x || (x = seed || +new Date() % m)) * x % m) / m] -where [p = 7243, q = 8747, m = p * q] -se [it.soft_type = 'rng'],
+caterwaul.module('factory', 'js_all', function ($) {
+  $.bbs_random(seed) = given.x [(x = (x || (x = seed || +new Date() % m)) * x % m) / m] -where [p = 7243, q = 8747, m = p * q] -se [it.soft_type = 'rng'],
 
-  caterwaul.factory = promote_constants_in -se [it.one_of    = one_of,     it.integer_between = integer_between,
-                                                it.literally = literally,  it.real_between    = real_between]
+  $.factory = promote_constants_in -se [it.one_of    = one_of,     it.integer_between = integer_between,
+                                        it.literally = literally,  it.real_between    = real_between]
 
 Type checking.
 Functions here are type-checked in the sense that they object to being called on arguments of the wrong type. In particular, this helps to prevent the combinators from being misused (which is
@@ -45,4 +45,4 @@ things about their arguments using the 'should' construct.
                                                -where  [xs = +args *[promote_constants_in(x)] -seq],
 
           integer_between(x, y)              = generator(given.r in r() * (y - x) + x >>> 0, 'integer between #{x} and #{y}'),
-          real_between(x, y)                 = generator(given.r in r() * (y - x) + x,       'real between #{x} and #{y}')]})();
+          real_between(x, y)                 = generator(given.r in r() * (y - x) + x,       'real between #{x} and #{y}')]});
